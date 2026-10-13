@@ -1,0 +1,23 @@
+{
+  "name": "farm-game",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:server": "npm -w @farm/server run dev",
+    "dev:client": "npm -w @farm/client run dev",
+    "build": "npm -w @farm/server run build && npm -w @farm/client run build",
+    "typecheck": "npm -w @farm/shared run typecheck && npm -w @farm/server run typecheck && npm -w @farm/client run typecheck",
+    "test": "npm -w @farm/server run test:run"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.6"
+  }
+}
