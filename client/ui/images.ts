@@ -1,5 +1,6 @@
 import type { CropType, GrowthState } from "../../shared/entities/crop.js";
 import type { ItemType } from "../../shared/entities/inventory.js";
+import type { Condition } from "../../shared/entities/plant.js";
 import type { Moisture } from "../../shared/entities/plot.js";
 
 // Vite liet ke san moi file png trong assets/ luc build / luc chay dev.
@@ -46,6 +47,12 @@ export type EffectType = (typeof EFFECT_TYPES)[number];
 
 
 // ---------- Quy uoc duong dan ----------
+export const AVATAR_PATH = "/assets/player/player1.png";
+
+export const playerAvatarImage = (): HTMLImageElement | null => {
+    const url = FILES[AVATAR_PATH];
+    return url ? loadImage(url) : null;
+};
 export const effectImagePath = (effect: EffectType): string =>
     `/assets/effect/${effect}.png`;
 
@@ -58,6 +65,8 @@ export const itemImagePath = (item: ItemType): string =>
 export const plotMoistureImagePath = (moisture: Moisture): string =>
     `/assets/moisture/${moisture}.png`;
 
+export const plantConditionImagePath = (crop: CropType, condition: Condition): string =>
+    `/assets/conditions/${condition}.png`;
 // ---------- Tra ve URL, thieu anh thi dung no-image.png ----------
 const fallbackUrl = FILES[FALLBACK_PATH] ?? "";
 
@@ -65,6 +74,9 @@ const urlOf = (path: string): string => FILES[path] ?? fallbackUrl;
 
 export const plantImageUrl = (crop: CropType, growth: GrowthState): string =>
     urlOf(plantImagePath(crop, growth));
+
+export const plantConditionImageUrl = (crop: CropType, condition: Condition): string =>
+    urlOf(plantConditionImagePath(crop, condition));
 
 export const itemImageUrl = (item: ItemType): string =>
     urlOf(itemImagePath(item));
@@ -89,6 +101,9 @@ const loadImage = (url: string): HTMLImageElement => {
 
 export const plantImage = (crop: CropType, growth: GrowthState): HTMLImageElement =>
     loadImage(plantImageUrl(crop, growth));
+
+export const plantConditionImage = (crop: CropType, condition: Condition): HTMLImageElement =>
+    loadImage(plantConditionImageUrl(crop, condition));
 
 export const effectImage = (effect: EffectType):HTMLImageElement =>
     loadImage(urlOf(effectImagePath(effect)));

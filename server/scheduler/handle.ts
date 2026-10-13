@@ -1,5 +1,5 @@
 import type { World } from "../core/world.js";
-import { CROPS } from "../../shared/crop/crop-config.js";
+import { CROPS } from "../../shared/config/crop-config.js";
 import { getNextGrowthSchedule } from "../growth/growth.js";
 import type { CheckPestEvent, PlantGrowEvent, PlantRotenEvent, PlantWitheredEvent, SoilDryEvent, WeedCheckEvent } from "./scheduler.js";
 
@@ -14,6 +14,21 @@ export const handleSoilDry = (
     }
 
     plot.state.moisture = 'DRY';
+    if(plot.plantId === null){
+        plot.state.soil = 'UNTILLNED';
+    }
+    if (plot.plantId !== null) {
+        const plant = world.plants.get(plot.plantId);
+        if (plant && plant.state.condition === 'ACTIVE') {
+            const crop = CROPS[plant.cropType];
+            
+            world.scheduler.schedule({
+                type: 'PLANT_WITHERED',
+                plantId: plant.id,
+                executeAt: event.executeAt + crop.condition.witherAfter,
+            });
+        }
+    }
 };
 
 export const handleWeedCheck = (
@@ -95,7 +110,7 @@ export const handlePlantRotten = (
     if (!plant) return;
 
     const crop = CROPS[plant.cropType];
-
+    plant.state.condition = 'ROTEN';
     world.scheduler.schedule({
         type: 'PLANT_ROTTEN',
         plantId: plant.id,
@@ -111,6 +126,8 @@ export const handlePlantWithered = (
     if (!plant) return;
 
     const crop = CROPS[plant.cropType];
+
+    plant.state.condition = 'WITHERED';
 
     world.scheduler.schedule({
         type: 'PLANT_WITHERED',

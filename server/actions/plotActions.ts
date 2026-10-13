@@ -1,7 +1,7 @@
 import type { World } from "../core/world.js";
 import { canInteract } from "../../shared/validation/validateDistance.js";
 import { validatePlant, validatePlayer, validatePlot } from "../validation/validateEntities.js";
-import { CROPS } from "../../shared/crop/crop-config.js";
+import { CROPS } from "../../shared/config/crop-config.js";
 import { addItem } from "./inventoryAction.js";
 
 //validate

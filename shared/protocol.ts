@@ -14,13 +14,18 @@ export type ActionKind =
     | 'catchPest'
     | 'dig';
 
+export type ShopActionKind = 'buy' | 'sell';
+
 export const ACTION_KINDS: readonly ActionKind[] = [
     'till', 'water', 'plant', 'weed', 'harvest', 'catchPest', 'dig',
 ];
 
+export const SHOP_ACTION_KINDS: readonly ShopActionKind[] = ['buy', 'sell'];
+
 export type ClientMsg =
     | { t: 'hello'; token: string }
     | { t: 'move'; x: number; y: number }
+    | { t: 'shop'; action: ShopActionKind; itemType: ItemType; quantity: number }
     | { t: 'act'; kind: ActionKind; plotId: number; cropType?: CropType };
 
 // Map khong JSON hoa duoc nen snapshot dung mang cac cap [key, value].

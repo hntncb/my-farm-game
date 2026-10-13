@@ -1,0 +1,80 @@
+.hud-panel {
+    position: fixed;
+    top: 8px;
+    margin: 0;
+    padding: 8px 10px;
+    background: #000c;
+    color: #fff;
+    font: 12px monospace;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.seed-btn {
+    width: 100%;
+    padding: 4px;
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+.seed-btn:hover { background: #fff2; }
+
+.interactive { pointer-events: auto; }
+
+.hud-top-center {
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hud-bottom-center {
+    top: auto;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.hud-bottom-right {
+    top: auto;
+    bottom: 8px;
+    right: 8px;
+    left: auto;
+    transform: none;
+}
+
+.hud-left {
+    left: 8px;
+}
+
+.hud-right {
+    right: 8px;
+    min-width: 180px;
+}
+
+.hidden {
+    display: none;
+}
+
+.inv-title {
+    font-weight: bold;
+}
+
+.inv-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.inv-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.inv-name {
+    flex: 1;
+}

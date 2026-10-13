@@ -1,4 +1,4 @@
-import { ACTION_KINDS, type ActionKind, type ClientMsg } from "../shared/protocol.js";
+import { ACTION_KINDS, SHOP_ACTION_KINDS, type ActionKind, type ClientMsg, type ShopActionKind } from "../shared/protocol.js";
 import { CELL, GRID } from "../shared/constants.js";
 import type { CropType } from "../shared/entities/crop.js";
 import type { Plot } from "../shared/entities/plot.js";
@@ -7,6 +7,7 @@ import { digPlot, tillPlot, waterPlot, weedPlot } from "./actions/plotActions.js
 import type { World } from "./core/world.js";
 import { sendMsg, sendState, type Session } from "./session.js";
 import { validatePlayer, validatePlot } from "./validation/validateEntities.js";
+import type { ItemType } from "../shared/entities/inventory.js";
 
 // ---------- Phan tich tin nhan tu client (du lieu khong dang tin) ----------
 export const parseClientMsg = (text: string): ClientMsg | null => {
@@ -27,6 +28,23 @@ export const parseClientMsg = (text: string): ClientMsg | null => {
             return typeof m.x === "number" && typeof m.y === "number"
                 ? { t: "move", x: m.x, y: m.y }
                 : null;
+        case "shop": {
+            if (typeof m.action !== "string" || !(SHOP_ACTION_KINDS as readonly string[]).includes(m.action)) {
+                return null;
+            }
+            if (typeof m.itemType !== "string") {
+                return null;
+            }
+            if (typeof m.quantity !== "number" || m.quantity <= 0) {
+                return null;
+            }
+            return {
+                t: "shop",
+                action: m.action as ShopActionKind,
+                itemType: m.itemType as ItemType,
+                quantity: m.quantity,
+            };
+        }
 
         case "act": {
             if (typeof m.plotId !== "number") return null;

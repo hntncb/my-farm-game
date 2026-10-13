@@ -1,5 +1,5 @@
 import type { World } from "../core/world.js";
-import { CROPS } from "../../shared/crop/crop-config.js";
+import { CROPS } from "../../shared/config/crop-config.js";
 import type { CropType } from "../../shared/entities/crop.js";
 import type { ItemType } from "../../shared/entities/inventory.js";
 import { createPlant, type Plant } from "../../shared/entities/plant.js";

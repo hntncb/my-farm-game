@@ -41,3 +41,12 @@ export const validateCurrency = (world: World, playerId: number): Map<CurrencyTy
 
     return currency;
 };
+
+export const validateShop = (world: World, playerId: number):Map<ItemType, number> => {
+    let shop = world.shop.get(playerId);
+    if (!shop) {
+        shop = new Map<ItemType, number>();
+        world.shop.set(playerId, shop);
+    }
+    return shop;
+}

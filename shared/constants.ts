@@ -1,4 +1,4 @@
-export const GRID = 5;
+export const GRID = 6;
 export const CELL = 64;
 
 // Toa do o luoi (bat dau tu 1) -> toa do pixel cua tam o

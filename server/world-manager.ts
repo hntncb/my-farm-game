@@ -1,4 +1,5 @@
 import type { ClientMsg } from "../shared/protocol.js";
+import { buyFromPlayer, sellForPlayer } from "./actions/shopAction.js";
 import { createWorld } from "./core/world-factory.js";
 import type { World } from "./core/world.js";
 import type { Repository } from "./db/repository.js";
@@ -90,6 +91,20 @@ export class WorldManager {
             case "act":
                 try {
                     handleAct(session, msg);
+                } catch (err) {
+                    sendMsg(session, { t: "error", message: (err as Error).message });
+                }
+                return;
+            case "shop":
+                try {
+                    if (msg.action === "buy") {
+                        sellForPlayer(session.world, session.playerId, msg.itemType,'COIN', msg.quantity);
+                    } 
+                    if (msg.action === "sell") {
+                        buyFromPlayer(session.world, session.playerId, msg.itemType, 'COIN',msg.quantity);
+                    }
+                    session.dirty = true;
+                    sendState(session);
                 } catch (err) {
                     sendMsg(session, { t: "error", message: (err as Error).message });
                 }

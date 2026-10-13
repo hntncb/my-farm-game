@@ -6,13 +6,15 @@ import { addItem } from "../actions/inventoryAction.js";
 import type { World } from "./world.js";
 import { addCurrency } from "../actions/currencyAction.js";
 import type { ItemType } from "../../shared/entities/inventory.js";
-import { Shop } from "../../shared/entities/shop.js";
+import { SHOP_CONFIG } from "../../shared/config/shop-config.js";
 
 // 9 o dat (3x3) o giua luoi 5x5
 export const createWorld = (playerId: number): World => {
-    const plots = Array.from({ length: 9 }, (_, i) => {
-        const col = 2 + (i % 3);
-        const row = 2 + Math.floor(i / 3);
+    const COLS = 4;
+    const ROWS = 4;
+    const plots = Array.from({ length: COLS * ROWS }, (_, i) => {
+        const col = 2 + (i % COLS);
+        const row = 2 + Math.floor(i / COLS);
         return createPlot(
             i + 1,
             cellCenter(col),
@@ -23,7 +25,7 @@ export const createWorld = (playerId: number): World => {
     });
     const initialShopItems = new Map<ItemType, number>();
     
-    for (const [itemType, config] of Object.entries(Shop)) {
+    for (const [itemType, config] of Object.entries(SHOP_CONFIG)) {
         initialShopItems.set(itemType as ItemType, config.availableStonk);
     }
     const world: World = {
